@@ -14,7 +14,18 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
+            $table->decimal('price_achat', 10, 2);
+            $table->decimal('price_vente', 10, 2);
+            $table->string('code_barre')->unique();
+            
+            $table->foreignId('id_categorie')
+            ->nullable()
+            ->constrained('categories')
+            ->onDelete('set null');
+        
+            $table->foreignId('id_user')
+                ->constrained('users')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
